@@ -14,7 +14,7 @@ function displayPostList() {
         const item = document.createElement('li');
         item.textContent = `${post.title} (by ${post.author})`;
         item.style.cursor = 'pointer';
-        item.addEventListener('click', () => displayPostDetail(i));
+        item.addEventListener('click', () => displayPostDetail(i)); // Ensure this calls the function correctly
         ul.appendChild(item);
     });
     postListContainer.innerHTML = '<h2>All Posts</h2>';
@@ -22,6 +22,7 @@ function displayPostList() {
 }
 
 function displayPostDetail(index) {
+    if (index < 0 || index >= posts.length) return; // Check for valid index
     currentPostIndex = index;
     const post = posts[index];
     postDetailContainer.innerHTML = `
@@ -92,9 +93,11 @@ function updateImagePreview(imageUrl) {
         imagePreview.src = imageUrl;
         imagePreview.alt = "Image Preview";
         imagePreview.style.maxWidth = "200px";
+        imagePreview.style.display = "block"; 
         updatePostForm.appendChild(imagePreview);
     } else {
         imagePreview.src = '';
+        imagePreview.style.display = "none"; 
     }
 }
 
@@ -106,4 +109,5 @@ updatePostForm.elements['image'].addEventListener('input', function() {
     updateImagePreview(this.value);
 });
 
+// Initial display of post list
 displayPostList();
